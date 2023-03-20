@@ -1,0 +1,13 @@
+name: shinyapp
+title: shinyapp
+username:
+account: haitieliu
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8622661
+bundleId: 6984623
+url: https://haitieliu.shinyapps.io/shinyapp/
+when: 1679354554.02629
+lastSyncTime: 1679354554.0263
+asMultiple: FALSE
+asStatic: FALSE
