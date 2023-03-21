@@ -23,6 +23,12 @@ library(shiny)
 
 5. share your link to showcase your application!
 
+## Demo
+
+In this case we use Rshiny app to showcase the Budweiser EDA we did a whilte ago, you can check the repository here: https://github.com/haitieliu/Budweiser-EDA-Analysis
+
+After creating the EDA, we publish our app on our website, take a look: https://haitieliu.shinyapps.io/shinyapp/
+
 
 ## Contributing
 
