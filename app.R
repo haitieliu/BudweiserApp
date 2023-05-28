@@ -2,12 +2,14 @@ library(shiny)
 library(dplyr)
 library(ggplot2)
 library(tidyverse)
+library(plotly)
+library(usmap)
 
 # Define UI for random distribution app ----
 ui <- fluidPage(
   
   # App title ----
-  titlePanel("Welcome to the shiny app of Budweiser EDA"),
+  titlePanel("Welcome to the shinyapp of Budweiser EDA"),
   
   # Sidebar layout with input and output definitions ----
   sidebarLayout(
@@ -61,7 +63,10 @@ ui <- fluidPage(
                   tabPanel("ABV", plotOutput(outputId = "distPlot")),
                   tabPanel("IBU", plotOutput("boxPlot"))),
       
-      plotOutput(outputId = "scatterPlot")
+      tabsetPanel(type = "tabs",
+                  tabPanel("ScatterPlot", plotOutput("scatterPlot")),
+                  tabPanel("Map", plotOutput("my_map"))),
+
       
   )
 ))
@@ -190,6 +195,27 @@ server <- function(input, output) {
     }
   })
   
+  output$my_map = renderPlot({
+    
+    if (input$text == "No Filter"){
+      
+      plot_usmap(data = brewerybystate, regions = "state", values = "n", color = "#3E4A89FF", labels = TRUE, label_color = "#35B779FF") +  
+        ggrepel::geom_label_repel(data = brewerybystate, aes(x = lon, y = lat, label = n), size = 3, alpha = 0.8, label.r = unit(0.5, "lines"), label.size = 0.5, segment.color = "black", segment.size = 1)+
+        ggtitle("Number of Breweries in Each State")
+    }
+    
+    else if (input$text != "No Filter"){
+      
+      d3= brewerybystate%>%filter(state==input$text)
+      
+      plot_usmap(data = d3, regions = "state", values = "n", color = "#3E4A89FF", labels = TRUE, label_color = "#35B779FF") +  
+        ggrepel::geom_label_repel(data = d3, aes(x = lon, y = lat, label = n), size = 3, alpha = 0.8, label.r = unit(0.5, "lines"), label.size = 0.5, segment.color = "black", segment.size = 1)+
+        ggtitle("Number of Breweries in Each State")
+      
+    }
+    
+    })
 }  
 
 shinyApp(ui, server)
+
